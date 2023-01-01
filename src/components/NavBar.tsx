@@ -15,7 +15,14 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { ShoppingBasket } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
+
+const backStyle = {
+    backgroundColor: "#212121",
+    padding:2,
+}
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -56,7 +63,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const LinkWrapper = styled(Box)(({theme}) => ({
+    display: "flex",
+    gap: 30,
+    fontSize: "1.7rem",
+    "& a": {
 
+        color: "white", 
+        textDecoration:"none",
+
+        "&:hover":{
+            textDecoration: "underline",
+            textDecorationColor: "red"
+        }
+        
+    },
+
+}))
 
 
 export default function NavBar() {
@@ -87,6 +110,7 @@ export default function NavBar() {
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
+
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'top',
@@ -123,14 +147,7 @@ export default function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
+   
       <MenuItem>
         <IconButton
           size="large"
@@ -138,30 +155,19 @@ export default function NavBar() {
           color="inherit"
         >
           <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
+            <ShoppingBasket sx={{fontSize: "2rem"}}/>
           </Badge>
         </IconButton>
-        <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={e => handleProfileMenuOpen(e)}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+
+      
     </Menu>
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, backgroundColor:"red"} }>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={backStyle}>
           <IconButton
             size="large"
             edge="start"
@@ -190,32 +196,25 @@ export default function NavBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+
+            <LinkWrapper>
+                <Link to="/home">Home</Link>
+                <Link to="/contact">Contact</Link>
+                <Link to="/about">About</Link>
+            </LinkWrapper>
+
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
+              <Badge sx={{position:"relative", bottom:5}} badgeContent={4} color="error">
+                <ShoppingBasket sx={{fontSize: "2rem", marginLeft:2}} />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+         
           </Box>
+
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
