@@ -17,6 +17,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ShoppingBasket } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDrawer } from '../Redux/drawer';
 
 
 const backStyle = {
@@ -85,6 +87,11 @@ const LinkWrapper = styled(Box)(({theme}) => ({
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const {isOpen} = useSelector((state:any) => state.drawer)
+
+  const dispatch = useDispatch();
+
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -209,7 +216,7 @@ export default function NavBar() {
               color="inherit"
             >
               <Badge sx={{position:"relative", bottom:5}} badgeContent={4} color="error">
-                <ShoppingBasket sx={{fontSize: "2rem", marginLeft:2}} />
+                <ShoppingBasket onClick={() => dispatch(setDrawer(true))} sx={{fontSize: "2rem", marginLeft:2}} />
               </Badge>
             </IconButton>
          

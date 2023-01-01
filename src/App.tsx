@@ -5,12 +5,17 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
+import ShoppingCart from './components/ShoppingCart';
+import { useSelector } from 'react-redux';
 
 
 console.log("hello");
 
 
+
 const App:FC = () => {
+
+  const {isOpen} = useSelector((state:any) => state.drawer);
   return (
     <>
     <NavBar /> 
@@ -19,7 +24,9 @@ const App:FC = () => {
       <Route path="/home" element={<Home/>} />
       <Route path="/about" element={<h1>About</h1>} />
       <Route path="/contact" element={<h1>Contact</h1>} />
-    </Routes>            
+    </Routes>    
+
+    {isOpen ? <ShoppingCart/> : null}
   
     </>
   )
