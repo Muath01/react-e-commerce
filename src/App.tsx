@@ -1,8 +1,9 @@
 import { stringify } from 'querystring';
+import {Button} from '@mui/material';
 import React, { ReactElement, ReactNode, useCallback, useState, FC } from 'react';
-import { Container } from 'react-bootstrap';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import NavBar from './components/NavBar';
 
 
 
@@ -12,9 +13,8 @@ console.log("hello");
 const App:FC = () => {
   return (
     <>
-
-    <h1>hello This is me</h1>
-        
+    <NavBar></NavBar>
+            
     </>
   )
 
