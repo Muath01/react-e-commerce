@@ -1,6 +1,5 @@
-import React, {useState} from 'react'
-import {Drawer, Box, Typography, IconButton, Button} from "@mui/material"
-import MenuIcon from "@mui/icons-material/Menu"
+import {useState} from 'react'
+import {Drawer, Box, Typography, Button} from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux'
 import { setDrawer } from '../Redux/drawer'
 
@@ -22,11 +21,18 @@ const closeButton = {
 }
 
 const ShoppingCart = () => {
+
     
+
     const {isOpen} = useSelector((state:any) => state.drawer)
+    const {shoppingCartItems} = useSelector((state:any) => state.drawer);
 
 
-    const [isDrawOpen, setIsDrawOpen] = useState(isOpen);
+
+    
+
+
+    const [isDrawOpen] = useState(isOpen);
     const dispatch = useDispatch()
 
   return (
@@ -40,7 +46,13 @@ const ShoppingCart = () => {
             <Button variant='contained' sx={closeButton} onClick={() => dispatch(setDrawer(false))}>
                 X
             </Button>
-            
+
+
+            {shoppingCartItems.map((key:any) => (
+                key
+            ))
+            }
+
         </Box>
 
 
