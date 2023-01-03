@@ -17,7 +17,7 @@ function Home() {
     <Grid container spacing={2} >
 
     {products.map(item => (
-        <Grid key={Math.random()} item md={3} >
+        <Grid key={item} item md={3} >
             <Product productName={item}/>
         </Grid>
     ))}

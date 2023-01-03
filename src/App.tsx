@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import ShoppingCart from './components/ShoppingCart';
 import { useSelector } from 'react-redux';
+import Product from './components/Product';
 
 
 console.log("hello");
@@ -22,7 +23,7 @@ const App:FC = () => {
 
     <Routes>
       <Route path="/home" element={<Home/>} />
-      <Route path="/about" element={<h1>About</h1>} />
+      <Route path="/about" element={<Product productName="pen"/>} />
       <Route path="/contact" element={<h1>Contact</h1>} />
     </Routes>    
 

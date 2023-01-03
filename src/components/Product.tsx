@@ -1,4 +1,4 @@
-import { useState} from 'react'
+import { useEffect, useState} from 'react'
 import {Card, CardHeader, CardMedia, CardContent, Typography, Button} from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../Redux/drawer';
@@ -31,16 +31,15 @@ const  Product = ({productName} : ProductProp) => {
     const [isAdded, setIsAdded] = useState(false)
     const [productCount, setProductCount] = useState(1);
 
-    // const {isOpen} = useSelector((state:any) => state.drawer)
+
     const dispatch = useDispatch();
 
-    function addToShoppingCart(item: any){
 
-      // dispatch(addToCart(item))
-      setIsAdded(true)
-      console.log(isAdded) //prints false because the dispatch function is causing a re-render and so resetting the state
+    
+    useEffect(() => {
+      console.log("change")
 
-    }
+    }, [isAdded])
 
 
     function adjustCount(e: any){
@@ -74,12 +73,14 @@ const  Product = ({productName} : ProductProp) => {
       />
 
 
-{/* sfdljksfdl;jsfdjlksdfjkfsjkdl */}
       {
         !isAdded?
         <CardContent>
         <Button onClick={e => {
-          addToShoppingCart(productName);
+          // console.log(isAdded)
+          dispatch(addToCart("hello"))
+          setIsAdded(true)
+          // addToShoppingCart(productName);
 
           }} sx={buttonStyle} variant='contained'>Add To Shopping Cart</Button>
       </CardContent>

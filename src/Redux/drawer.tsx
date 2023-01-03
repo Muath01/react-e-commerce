@@ -1,26 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-type InitialState =  {
+type InitialState = {
     isOpen: Boolean,
-    shoppingCartItems: any[],
+    shoppingCartItems: string[],
 }
 
 const initialState: InitialState = {
-    isOpen: false, 
+    isOpen: false,
     shoppingCartItems: [],
 }
 
 export const drawer = createSlice({
-    name:"drawer", 
+    name: "drawer",
     initialState,
-    reducers:{
+    reducers: {
         setDrawer: (state, action) => {
             state.isOpen = !state.isOpen;
         },
-        addToCart:(state, action) => {
+        addToCart: (state: InitialState, action: PayloadAction<string>) => {
             state.shoppingCartItems.push(action.payload)
         },
     }
 })
 
-export const {setDrawer, addToCart} = drawer.actions;
+export const { setDrawer, addToCart } = drawer.actions;
