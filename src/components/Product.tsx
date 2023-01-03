@@ -1,7 +1,7 @@
 import { useEffect, useState} from 'react'
 import {Card, CardHeader, CardMedia, CardContent, Typography, Button} from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../Redux/drawer';
+import { addToCart, decrementItem, drawer, incrementItem, removeFromCart } from '../Redux/drawer';
 import styled from '@emotion/styled';
 // import { RootState } from './store';
 type ProductProp = {
@@ -23,13 +23,15 @@ const IncreaseAndReduceWrapper = styled(CardContent)(({ theme }) => ({
 }))
 
 
-
 const  Product = ({productName} : ProductProp) => {
 
 
     // states
     const [isAdded, setIsAdded] = useState(false)
     const [productCount, setProductCount] = useState(1);
+
+    const {shoppingCartItems} = useSelector((state:any) => state.drawer)
+
 
 
     const dispatch = useDispatch();
@@ -46,11 +48,11 @@ const  Product = ({productName} : ProductProp) => {
       let value = e.target.innerText;
 
       if(value == "+"){
-        setProductCount(() => productCount + 1)
-      }else if (productCount > 1) {
-        setProductCount(() => productCount - 1)
-
+        dispatch(incrementItem(productName))
+      }else if (shoppingCartItems[productName] > 1) {
+        dispatch(decrementItem(productName))
       }else{
+        dispatch(removeFromCart(productName))
         setIsAdded(false)
       }
 
@@ -77,17 +79,18 @@ const  Product = ({productName} : ProductProp) => {
         !isAdded?
         <CardContent>
         <Button onClick={e => {
-          // console.log(isAdded)
-          dispatch(addToCart("hello"))
-          setIsAdded(true)
-          // addToShoppingCart(productName);
+          
+          if(!(productName in shoppingCartItems)){
+            dispatch(addToCart(productName))
+            setIsAdded(true)
+          }
 
           }} sx={buttonStyle} variant='contained'>Add To Shopping Cart</Button>
       </CardContent>
      :
      <IncreaseAndReduceWrapper>
      <Button onClick={e => adjustCount(e)} variant='contained'>+</Button>
-     <Typography sx={{marginTop:"5px"}}>{productCount}</Typography>
+     <Typography sx={{marginTop:"5px"}}>{shoppingCartItems[productName]}</Typography>
      <Button onClick={e => adjustCount(e)} variant='contained'>-</Button>
      </IncreaseAndReduceWrapper>
       }

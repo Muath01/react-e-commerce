@@ -2,12 +2,14 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 type InitialState = {
     isOpen: Boolean,
-    shoppingCartItems: string[],
+    shoppingCartItems: {
+        [product:string]:number
+    },
 }
 
 const initialState: InitialState = {
     isOpen: false,
-    shoppingCartItems: [],
+    shoppingCartItems: {},
 }
 
 export const drawer = createSlice({
@@ -18,9 +20,22 @@ export const drawer = createSlice({
             state.isOpen = !state.isOpen;
         },
         addToCart: (state: InitialState, action: PayloadAction<string>) => {
-            state.shoppingCartItems.push(action.payload)
+            const product = action.payload;
+            state.shoppingCartItems[product] = 1 
         },
+        removeFromCart: (state: InitialState, action: PayloadAction<string>) => {
+            let item = action.payload;
+            delete state.shoppingCartItems[item];
+        },
+        incrementItem: (state: InitialState, action: PayloadAction<string>) => {
+            let item = action.payload;
+            state.shoppingCartItems[item] += 1
+        },
+        decrementItem: (state: InitialState, action: PayloadAction<string>) => {
+            let item = action.payload;
+            state.shoppingCartItems[item] -= 1
+        }
     }
 })
 
-export const { setDrawer, addToCart } = drawer.actions;
+export const { setDrawer, addToCart, removeFromCart, incrementItem, decrementItem } = drawer.actions;
