@@ -9,6 +9,7 @@ type products = {
 
 function Home() {
 
+//    const products: Array<string> = ["ice-cream"]
    const products: Array<string> = ["pen", "ruler", "ice-cream"]
 
   return (

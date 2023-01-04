@@ -31,17 +31,10 @@ const  Product = ({productName} : ProductProp) => {
     const [productCount, setProductCount] = useState(1);
 
     const {shoppingCartItems} = useSelector((state:any) => state.drawer)
-
+    const {isOpen} = useSelector((state:any) => state.drawer)
 
 
     const dispatch = useDispatch();
-
-
-    
-    useEffect(() => {
-      console.log("change")
-
-    }, [isAdded])
 
 
     function adjustCount(e: any){
@@ -76,9 +69,10 @@ const  Product = ({productName} : ProductProp) => {
 
 
       {
-        !isAdded?
+        !isAdded || isOpen || shoppingCartItems[productName] == undefined?
         <CardContent>
         <Button onClick={e => {
+          console.log("hacking")
           
           if(!(productName in shoppingCartItems)){
             dispatch(addToCart(productName))

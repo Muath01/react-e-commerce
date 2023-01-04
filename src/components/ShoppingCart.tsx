@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {Drawer, Box, Typography, Button, CardHeader, Card, CardMedia, CardContent} from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux'
-import { setDrawer } from '../Redux/drawer'
+import { decrementItem, incrementItem, removeFromCart, setDrawer } from '../Redux/drawer'
 import styled from '@emotion/styled'
 
 const IncreaseAndReduceWrapper = styled(CardContent)(({ theme }) => ({
@@ -33,7 +33,9 @@ const ShoppingCart = () => {
 
     
 
+    
     const {isOpen} = useSelector((state:any) => state.drawer)
+    const [productName, setProductName] = useState("");
     const {shoppingCartItems} = useSelector((state:any) => state.drawer);
     const [productCount, setProductCount] = useState(1);
 
@@ -45,23 +47,22 @@ const ShoppingCart = () => {
     const [isDrawOpen] = useState(isOpen);
     const dispatch = useDispatch()
 
-    function adjustCount(e: any){
-        let value = e.target.innerText;
-  
-        if(value == "+"){
-          setProductCount(() => productCount + 1)
-        }else if (productCount > 1) {
-          setProductCount(() => productCount - 1)
-  
-        }else{
-        //   setIsAdded(false)
+    function adjustCount(e: any, item: string) {
+        let value = e.currentTarget.innerText;
+      
+        if (value == "+") {
+          dispatch(incrementItem(item))
+        } else if (shoppingCartItems[item] > 1) {
+          dispatch(decrementItem(item))
+        } else {
+            dispatch(removeFromCart(item))
+
         }
-  
       }
 
   return (
     <>
-    <Drawer anchor='right' open={isDrawOpen} onClose={() => dispatch(setDrawer(false))}>
+    <Drawer anchor='right' open={isOpen} onClose={() => dispatch(setDrawer(false))}>
         <Box p={2} width="350px" textAlign="center" role="presentation">
             <Typography variant='h6' component='div'>
                 Shopping Cart
@@ -73,27 +74,27 @@ const ShoppingCart = () => {
 
 
             {Object.keys(shoppingCartItems).map((item:string) => (
-                <Card key={item}>
+            <Card key={item}>
+                    <div>
                     <CardHeader
-                            sx={{textAlign:"center"}}
-                            title={item}
+                        sx={{textAlign:"center"}}
+                        title={item}
                         />
-                        <CardMedia
-                            component="img"
-                            height="250"
-                            image={`../images/${item}.png`}
-                            alt={`an image of ${item}`}
+                    <CardMedia
+                        component="img"
+                        height="250"
+                        image={`../images/${item}.png`}
+                        alt={`an image of ${item}`}
                         />    
-        
+                    </div>
 
                     <IncreaseAndReduceWrapper>
-                        <Button onClick={e => adjustCount(e)} variant='contained'>+</Button>
-                        <Typography sx={{marginTop:"5px"}}>{shoppingCartItems[item]}</Typography>
-                        <Button onClick={e => adjustCount(e)} variant='contained'>-</Button>
-                        </IncreaseAndReduceWrapper>
-                </Card>
-            ))
-            }
+                    <Button onClick={e => adjustCount(e, item)} variant='contained'>+</Button>
+                    <Typography sx={{marginTop:"5px"}}>{shoppingCartItems[item]}</Typography>
+                    <Button onClick={e => adjustCount(e, item)} variant='contained'>-</Button>
+                    </IncreaseAndReduceWrapper>
+            </Card>
+            ))}
 
         </Box>
 
