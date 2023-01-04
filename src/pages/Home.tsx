@@ -2,14 +2,28 @@ import React from 'react'
 import {Grid, Box} from "@mui/material"
 import Product from '../components/Product'
 
-type products = {
-    productName: string,
+// type products = {
+//     productName: string,
 
-}
+// }
 
 function Home() {
 
-   const products: Array<string> = ["ice-cream"]
+   const products: Object = {
+    "ice-cream":{
+        quantity:1,
+        price:0.79
+    },
+    // "pen":{
+    //     quantity:1,
+    //     price:2
+    // },
+    // "ruler":{
+    //     quantity:1,
+    //     price:0.5
+    // }
+    
+   }
 //    const products: Array<string> = ["pen", "ruler", "ice-cream"]
 
   return (
@@ -17,9 +31,9 @@ function Home() {
 
     <Grid container spacing={2} >
 
-    {products.map(item => (
-        <Grid key={item} item md={3} >
-            <Product productName={item}/>
+    {Object.keys(products).map(MyProduct => (
+        <Grid key={MyProduct} item md={3} >
+            <Product productName={MyProduct} quantity={products[MyProduct]["quantity"]} price={products[MyProduct]["price"]}/>
         </Grid>
     ))}
 

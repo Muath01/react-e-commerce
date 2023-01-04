@@ -23,7 +23,7 @@ const App:FC = () => {
 
     <Routes>
       <Route path="/home" element={<Home/>} />
-      <Route path="/about" element={<Product productName="pen"/>} />
+      <Route path="/about" element={<h1>Hello</h1>} />
       <Route path="/contact" element={<h1>Contact</h1>} />
     </Routes>    
 
