@@ -35,6 +35,7 @@ const  Product = ({productName} : ProductProp) => {
 
 
     const dispatch = useDispatch();
+    console.log(isAdded)
 
 
     function adjustCount(e: any){
@@ -69,7 +70,15 @@ const  Product = ({productName} : ProductProp) => {
 
 
       {
-        !isAdded || isOpen || shoppingCartItems[productName] == undefined?
+        (productName in shoppingCartItems) && !isOpen?
+        <IncreaseAndReduceWrapper>
+        <Button onClick={e => adjustCount(e)} variant='contained'>+</Button>
+        <Typography sx={{marginTop:"5px"}}>{shoppingCartItems[productName]}</Typography>
+        <Button onClick={e => adjustCount(e)} variant='contained'>-</Button>
+        </IncreaseAndReduceWrapper>
+        
+        :
+        !isAdded || isOpen || shoppingCartItems[productName] == undefined && !(productName in shoppingCartItems)?
         <CardContent>
         <Button onClick={e => {
           console.log("hacking")
@@ -82,11 +91,7 @@ const  Product = ({productName} : ProductProp) => {
           }} sx={buttonStyle} variant='contained'>Add To Shopping Cart</Button>
       </CardContent>
      :
-     <IncreaseAndReduceWrapper>
-     <Button onClick={e => adjustCount(e)} variant='contained'>+</Button>
-     <Typography sx={{marginTop:"5px"}}>{shoppingCartItems[productName]}</Typography>
-     <Button onClick={e => adjustCount(e)} variant='contained'>-</Button>
-     </IncreaseAndReduceWrapper>
+     null
       }
     
     </Card>
