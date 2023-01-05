@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useMemo} from 'react'
 import {Grid, Box} from "@mui/material"
 import Product from '../components/Product'
-import { ProductContext } from '../context/productContext'
+import { ListContext, ProductContext } from '../context/productContext'
 import { render } from '@testing-library/react'
 
 // type products = {
@@ -11,7 +11,9 @@ import { render } from '@testing-library/react'
 
 function Home() {
 
-  const {value, setValue} = useContext(ProductContext)
+  const {product, setProduct} = useContext(ProductContext)
+  const {productList, setProductList} = useContext(ListContext);
+  // const {}
 
   const products: Object = useMemo(
       () => ({
@@ -31,8 +33,14 @@ function Home() {
       []
     );
 
+
    useEffect(() => {
-    setValue(Object.keys(products))
+    setProduct(Object.keys(products))
+    // console.log(product)
+    let copy = {...products}
+    
+    setProductList(copy)
+    console.log(productList)
 
    }, [])
 
@@ -45,7 +53,7 @@ function Home() {
 
     <Grid container spacing={2} >
 
-    {Object.keys(products).map(MyProduct => (
+    {Object.keys(productList).map(MyProduct => (
         <Grid key={MyProduct} item md={3} >
             <Product productName={MyProduct} quantity={products[MyProduct]["quantity"]} price={products[MyProduct]["price"]}/>
         </Grid>

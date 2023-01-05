@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, ChangeEvent} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDrawer } from '../Redux/drawer';
 import { Autocomplete, Button, TextField } from '@mui/material';
-import { ProductContext } from '../context/productContext';
+import { ListContext, ProductContext } from '../context/productContext';
 
 
 const backStyle = {
@@ -91,12 +91,14 @@ export default function NavBar() {
 
 
   // selector 
-
   const {shoppingCartItems} = useSelector((state:any) => state.drawer)
   let arr = Object.keys(shoppingCartItems)
 
-  const {value} = useContext(ProductContext);
 
+  //Context
+
+  const {product} = useContext(ProductContext);
+  const {productList, setProductList} = useContext(ListContext)
 
 
 
@@ -194,6 +196,27 @@ export default function NavBar() {
   
   ];
 
+  function change(e: any){
+    let value = e.target.innerText
+
+    let newObj = { 
+      [value]:{
+        ...productList[value]
+      }
+    }
+    
+    console.log(productList)
+    setProductList(newObj)
+
+    if(value in productList){
+    }else{
+      // console.log("value not in product list", productList)
+    }
+
+
+    
+  }
+
   return (
     <Box sx={{ flexGrow: 1, backgroundColor:"red"} }>
       <AppBar position="static">
@@ -220,13 +243,12 @@ export default function NavBar() {
               {/* <SearchIcon /> */}
             </SearchIconWrapper>
             <Autocomplete
-              // disablePortal
-              // disableClearable
               freeSolo
-              // id="combo-box-demo"
-              options={value}
-              sx={{ width: 400 }}
-              renderInput={(params) => <TextField {...params} label="Search..." />}
+              options={product}
+              sx={{ width: 400, height:50 }}
+              placeholder="search..."
+              onChange={(e) => change(e)}
+              renderInput={(params) => <TextField {...params}/>}
             />
             {/* <StyledInputBase
               placeholder="Search…"

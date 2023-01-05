@@ -8,23 +8,27 @@ import Home from './pages/Home';
 import ShoppingCart from './components/ShoppingCart';
 import { useSelector } from 'react-redux';
 import Product from './components/Product';
-import { ProductContext } from './context/productContext';
+import { ListContext, ProductContext } from './context/productContext';
 
 
-console.log("hello");
 
 
 
 const App:FC = () => {
 
-  const [value, setValue] = useState([])
+  const [product, setProduct] = useState([])
+  const [productList, setProductList] = useState({})
 
-  const provideValue = useMemo(() => ({value, setValue}), [value, setValue])
+  const provideValue = useMemo(() => ({product, setProduct}), [product, setProduct])
+  const productListValue = useMemo(() => ({productList, setProductList}), [productList, setProductList])
+
 
   const {isOpen} = useSelector((state:any) => state.drawer);
   return (
     <>
-    <ProductContext.Provider value = {provideValue}>
+    <ListContext.Provider value={productListValue}>
+
+    <ProductContext.Provider value={provideValue}>
 
     <NavBar /> 
 
@@ -34,6 +38,7 @@ const App:FC = () => {
       <Route path="/contact" element={<h1>Contact</h1>} />
     </Routes>    
     </ProductContext.Provider>
+    </ListContext.Provider>
 
     {isOpen ? <ShoppingCart/> : null}
   
