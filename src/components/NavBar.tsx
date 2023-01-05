@@ -85,6 +85,15 @@ const LinkWrapper = styled(Box)(({theme}) => ({
 
 
 export default function NavBar() {
+
+
+
+  // selector 
+
+  const {shoppingCartItems} = useSelector((state:any) => state.drawer)
+
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -215,7 +224,7 @@ export default function NavBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge sx={{position:"relative", bottom:5}} badgeContent={4} color="error">
+              <Badge sx={{position:"relative", bottom:5}} badgeContent={Object.keys(shoppingCartItems).length} color="error">
                 <ShoppingBasket onClick={() => dispatch(setDrawer(true))} sx={{fontSize: "2rem", marginLeft:2}} />
               </Badge>
             </IconButton>

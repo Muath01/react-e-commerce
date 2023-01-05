@@ -40,6 +40,26 @@ const ShoppingCart = () => {
     const [productCount, setProductCount] = useState(1);
 
 
+    // Calculate the total of the shopping cart and display it
+    let total = 0;
+
+    function calculateCartTotal(){
+        Object.keys(shoppingCartItems).map(item => {
+    
+    
+    
+          total += Math.round(shoppingCartItems[item]["quantity"] * shoppingCartItems[item]["price"] * 100 ) / 100
+    
+          total = parseFloat(total.toFixed(2));
+    
+        }) 
+        return total
+
+    }
+
+    console.log("total: ",total)
+
+
 
     
 
@@ -68,6 +88,9 @@ const ShoppingCart = () => {
         <Box p={2} width="350px" textAlign="center" role="presentation">
             <Typography variant='h6' component='div'>
                 Shopping Cart
+            </Typography>
+            <Typography variant='h6' component='div'>
+                Total: {calculateCartTotal()}
             </Typography>
 
             <Button variant='contained' sx={closeButton} onClick={() => dispatch(setDrawer(false))}>

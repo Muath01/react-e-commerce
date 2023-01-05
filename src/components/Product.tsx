@@ -40,12 +40,8 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
 
     // console.log(shoppingCartItems)
 
-
-    if(productName in shoppingCartItems){
-      console.log(productName)
-      console.log("chill", shoppingCartItems)
-      console.log("herex", shoppingCartItems[productName])
-    }
+    
+    
 
 
     const dispatch = useDispatch();

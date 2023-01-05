@@ -64,21 +64,25 @@ export const drawer = createSlice({
         },
         changePrice:(state:InitialState, action?: PayloadAction<Object>) => {
 
+            
             let item = action.payload;
             let price = item["price"]
-
             
-            const newUser = {...state.shoppingCartItems}
+            if(item["quantity"] >= 1){
+
+                const newUser = {...state.shoppingCartItems}
+                
+                // console.log(newUser[item["productName"]].quantity)
+                let quantity = newUser[item["productName"]].quantity;
+    
+                let newPrice = parseFloat((price * quantity).toFixed(2).padEnd(3, "0"))
+                
+                newUser[item["productName"]]["price"] =  newPrice;
+    
+    
+                state.shoppingCartItems = newUser;
+            }
             
-            // console.log(newUser[item["productName"]].quantity)
-            let quantity = newUser[item["productName"]].quantity;
-
-            let newPrice = parseFloat((price * quantity).toFixed(2).padEnd(3, "0"))
-            
-            newUser[item["productName"]]["price"] =  newPrice;
-
-
-            state.shoppingCartItems = newUser;
         }
     }
 })
