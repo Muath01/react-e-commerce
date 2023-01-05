@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,6 +19,8 @@ import { ShoppingBasket } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDrawer } from '../Redux/drawer';
+import { Autocomplete, Button, TextField } from '@mui/material';
+import { ProductContext } from '../context/productContext';
 
 
 const backStyle = {
@@ -91,6 +93,12 @@ export default function NavBar() {
   // selector 
 
   const {shoppingCartItems} = useSelector((state:any) => state.drawer)
+  let arr = Object.keys(shoppingCartItems)
+
+  const {value} = useContext(ProductContext);
+
+
+
 
 
 
@@ -100,6 +108,7 @@ export default function NavBar() {
   const {isOpen} = useSelector((state:any) => state.drawer)
 
   const dispatch = useDispatch();
+
 
 
   const isMenuOpen = Boolean(anchorEl);
@@ -180,6 +189,11 @@ export default function NavBar() {
     </Menu>
   );
 
+  const top100Films = [
+    { label: 'The Shawshank Redemption', year: 1994 },
+  
+  ];
+
   return (
     <Box sx={{ flexGrow: 1, backgroundColor:"red"} }>
       <AppBar position="static">
@@ -203,12 +217,21 @@ export default function NavBar() {
           </Typography>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              {/* <SearchIcon /> */}
             </SearchIconWrapper>
-            <StyledInputBase
+            <Autocomplete
+              // disablePortal
+              // disableClearable
+              freeSolo
+              // id="combo-box-demo"
+              options={value}
+              sx={{ width: 400 }}
+              renderInput={(params) => <TextField {...params} label="Search..." />}
+            />
+            {/* <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-            />
+            /> */}
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
