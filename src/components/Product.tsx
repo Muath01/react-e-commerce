@@ -58,10 +58,13 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
         dispatch(removeFromCart(productName))
         setIsAdded(false)
       }
-      dispatch(changePrice({productName, price}))
-
+      
+      if(shoppingCartItems[productName].quantity > 1) dispatch(changePrice({productName, quantity, price}))
 
     }
+
+
+
 
 
   return (

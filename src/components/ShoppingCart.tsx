@@ -41,23 +41,26 @@ const ShoppingCart = () => {
 
 
     // Calculate the total of the shopping cart and display it
-    let total = 0;
 
     function calculateCartTotal(){
+        let total = 0;
         Object.keys(shoppingCartItems).map(item => {
+            total = 0;
     
     
     
           total += Math.round(shoppingCartItems[item]["quantity"] * shoppingCartItems[item]["price"] * 100 ) / 100
-    
+          console.log("this", total)
+          
           total = parseFloat(total.toFixed(2));
+          console.log("this", total)
     
         }) 
+
         return total
 
     }
 
-    console.log("total: ",total)
 
 
 
@@ -66,20 +69,25 @@ const ShoppingCart = () => {
 
     const [isDrawOpen] = useState(isOpen);
     const dispatch = useDispatch()
-
+    
+    
     function adjustCount(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, productName: string) {
         let value = e.currentTarget.innerText;
+        let quantity = shoppingCartItems[productName].quantity
+        let price = shoppingCartItems[productName].price / shoppingCartItems[productName].quantity;
+
+
         if (value == "+") {
           dispatch(incrementItem(productName))
         } else if (shoppingCartItems[productName].quantity > 1) {
-          dispatch(decrementItem(productName))
+            dispatch(decrementItem(productName))
         } else {
             dispatch(removeFromCart(productName))
-
+            
         }
-        let price = shoppingCartItems[productName].price / shoppingCartItems[productName].quantity;
-
-        dispatch(changePrice({productName, price}))
+        
+        if(quantity >= 1) dispatch(changePrice({productName, quantity, price}))
+        
       }
 
   return (

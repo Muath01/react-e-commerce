@@ -205,7 +205,6 @@ export default function NavBar() {
       }
     }
     
-    console.log(productList)
     setProductList(newObj)
 
     if(value in productList){
