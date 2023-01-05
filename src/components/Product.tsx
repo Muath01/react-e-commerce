@@ -35,10 +35,17 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
     const {shoppingCartItems} = useSelector((state:any) => state.drawer)
     const {isOpen} = useSelector((state:any) => state.drawer)
 
+
     // console.log("che", shoppingCartItems[productName].price)
 
-    // console.log(shoppingCartItems.)
-    console.log(productName)
+    // console.log(shoppingCartItems)
+
+
+    if(productName in shoppingCartItems){
+      console.log(productName)
+      console.log("chill", shoppingCartItems)
+      console.log("herex", shoppingCartItems[productName])
+    }
 
 
     const dispatch = useDispatch();
@@ -48,7 +55,6 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
       let value = e.target.innerText;
 
       if(value == "+"){
-        console.log("first")
         dispatch(incrementItem(productName))
       }else if (shoppingCartItems[productName].quantity > 1) {
         dispatch(decrementItem(productName))
@@ -68,7 +74,7 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
         <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         sx={{textAlign:"center"}}
-        title={Object.keys(shoppingCartItems).length != 0 ? `£${shoppingCartItems[productName].price} ${productName}`: `£${price} ${productName}`}
+        title={productName in shoppingCartItems ? `£${shoppingCartItems[productName].price} ${productName}`: `£${price} ${productName}`}
       />
       <CardMedia
         component="img"
@@ -94,7 +100,7 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
           
           if(!(productName in shoppingCartItems)){
             // console.log("PN", price)
-            dispatch(addToCart({productName, quantity}))
+            dispatch(addToCart({productName, quantity, price}))
             setIsAdded(true)
           }
 

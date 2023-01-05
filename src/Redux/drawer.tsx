@@ -26,18 +26,20 @@ export const drawer = createSlice({
         addToCart: (state: InitialState, action: PayloadAction<Object>) => {
             const item = action.payload;
 
-            const newUser =  {...state.shoppingCartItems}
+            const newProduct = {...state.shoppingCartItems}
 
-            console.log("item", action)
+            // Created a new object of the nested object to avoid mutating the original object, In JS, when you copy a nested object, 
+            // js will make a refrence to those nested objects, because they're not primitive types, and so if you make a refrence to an object
+            // then mutate it, you'll be mutating the original state. To avoid this, I made another copy of the nested object. 
+            const newUser =  {...state.shoppingCartItems.product, quantity: item["quantity"], price: item["price"]}
 
-            newUser[item["productName"]] = {
-                quantity: item["quantity"],
-                // price:item["price"]
+            newProduct[item["productName"]] = {
+                quantity: newUser.quantity, 
+                price: newUser.price
             }
-
             
-                state.shoppingCartItems = newUser
-                console.log(newUser)
+            
+            state.shoppingCartItems = newProduct
 
 
 
@@ -68,7 +70,7 @@ export const drawer = createSlice({
             
             const newUser = {...state.shoppingCartItems}
             
-            console.log(newUser[item["productName"]].quantity)
+            // console.log(newUser[item["productName"]].quantity)
             let quantity = newUser[item["productName"]].quantity;
 
             let newPrice = parseFloat((price * quantity).toFixed(2).padEnd(3, "0"))

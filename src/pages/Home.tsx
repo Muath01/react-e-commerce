@@ -14,14 +14,15 @@ function Home() {
         quantity:1,
         price:0.79
     },
-    // "pen":{
-    //     quantity:1,
-    //     price:2
-    // },
-    // "ruler":{
-    //     quantity:1,
-    //     price:0.5
-    // }
+    "pen":{
+        quantity:1,
+        price:0.89
+    },
+
+    "ruler":{
+        quantity:1,
+        price:0.5
+    }
     
    }
 //    const products: Array<string> = ["pen", "ruler", "ice-cream"]
