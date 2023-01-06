@@ -207,7 +207,6 @@ export default function NavBar() {
   function change(e: any){
     let value = e.target.innerText;
 
-    console.log(value)
     
     let newObj = { 
       [value]:{
@@ -217,12 +216,10 @@ export default function NavBar() {
     
     
     if(value in originalList){
-      console.log("value in product list")
       setProductList(newObj);
     }else if(value == undefined){
       setProductList(originalList)
     }else{
-      console.log("value not in product list")
     }
   }
 

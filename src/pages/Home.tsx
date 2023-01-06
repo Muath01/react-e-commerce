@@ -15,23 +15,8 @@ function Home() {
   const {productList, setProductList} = useContext(ListContext);
   // const {}
 
-  const products: Object = useMemo(
-      () => ({
-        "ice-cream": {
-          quantity: 1,
-          price: 0.79,
-        },
-        "pen": {
-          quantity: 1,
-          price: 0.89,
-        },
-        "ruler": {
-          quantity: 1,
-          price: 0.5,
-        },
-      }),
-      []
-    );
+  const products: Object = productList;
+
 
 
     
@@ -42,15 +27,12 @@ function Home() {
     setProduct(Object.keys(products))
 
 
-    // console.log(product)
 
     // creates a copy of products
     let copy = {...products}
-    // console.log("copy", copy)
     
     // the ProductList is supposed to be a copy that never changes and is displayed on the screen if no specific items are picked. 
     setProductList(copy)
-    // console.log("productListz", productList)
 
 
    }, [])

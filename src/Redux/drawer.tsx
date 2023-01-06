@@ -67,11 +67,12 @@ export const drawer = createSlice({
             
             let item = action.payload;
             let price = item["price"]
+            // console.log("inside", price)
+
             
             if(item["quantity"] >= 0){
 
                 const newUser = {...state.shoppingCartItems}
-                console.log("herereerer")
                 // console.log(newUser[item["productName"]].quantity)
                 let quantity = newUser[item["productName"]].quantity;
     

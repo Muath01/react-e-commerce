@@ -42,23 +42,15 @@ const ShoppingCart = () => {
 
     // Calculate the total of the shopping cart and display it
 
+    let total = 0;
     function calculateCartTotal(){
-        let total = 0;
+
         Object.keys(shoppingCartItems).map(item => {
-            total = 0;
     
-    
-    
-          total += Math.round(shoppingCartItems[item]["quantity"] * shoppingCartItems[item]["price"] * 100 ) / 100
-          console.log("this", total)
-          
-          total = parseFloat(total.toFixed(2));
-          console.log("this", total)
-    
+        console.log(item)
+        total += Math.round(shoppingCartItems[item]["price"] * 100) / 100
         }) 
-
         return total
-
     }
 
 
