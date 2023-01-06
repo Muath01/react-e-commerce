@@ -1,4 +1,4 @@
-import React, {useContext, ChangeEvent} from 'react';
+import React, {useContext, ChangeEvent, useMemo} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -100,6 +100,14 @@ export default function NavBar() {
   const {product} = useContext(ProductContext);
   const {productList, setProductList} = useContext(ListContext)
 
+  // console.log("pls", productList)
+
+  // let originalList = {...productList}
+
+
+  const originalList = useMemo(() => ({...productList}), []);
+
+
 
 
 
@@ -197,23 +205,25 @@ export default function NavBar() {
   ];
 
   function change(e: any){
-    let value = e.target.innerText
+    let value = e.target.innerText;
 
+    console.log(value)
+    
     let newObj = { 
       [value]:{
-        ...productList[value]
+        ...originalList[value]
       }
     }
     
-    setProductList(newObj)
-
-    if(value in productList){
-    }else{
-      // console.log("value not in product list", productList)
-    }
-
-
     
+    if(value in originalList){
+      console.log("value in product list")
+      setProductList(newObj);
+    }else if(value == undefined){
+      setProductList(originalList)
+    }else{
+      console.log("value not in product list")
+    }
   }
 
   return (

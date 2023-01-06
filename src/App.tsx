@@ -17,7 +17,20 @@ import { ListContext, ProductContext } from './context/productContext';
 const App:FC = () => {
 
   const [product, setProduct] = useState([])
-  const [productList, setProductList] = useState({})
+  const [productList, setProductList] = useState({
+    "ice-cream": {
+      quantity: 1,
+      price: 0.79,
+    },
+    "pen": {
+      quantity: 1,
+      price: 0.89,
+    },
+    "ruler": {
+      quantity: 1,
+      price: 0.5,
+    },
+  })
 
   const provideValue = useMemo(() => ({product, setProduct}), [product, setProduct])
   const productListValue = useMemo(() => ({productList, setProductList}), [productList, setProductList])

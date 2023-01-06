@@ -34,13 +34,24 @@ function Home() {
     );
 
 
-   useEffect(() => {
-    setProduct(Object.keys(products))
-    // console.log(product)
-    let copy = {...products}
     
+
+   useEffect(() => {
+
+    // creates an array with products keys
+    setProduct(Object.keys(products))
+
+
+    // console.log(product)
+
+    // creates a copy of products
+    let copy = {...products}
+    // console.log("copy", copy)
+    
+    // the ProductList is supposed to be a copy that never changes and is displayed on the screen if no specific items are picked. 
     setProductList(copy)
-    console.log(productList)
+    // console.log("productListz", productList)
+
 
    }, [])
 
