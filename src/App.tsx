@@ -63,6 +63,8 @@ const App:FC = () => {
     <NavBar /> 
 
     <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/react-ecommerce" element={<Home/>}/>
       <Route path="/home" element={<Home/>} />
       <Route path="/about" element={<h1>Hello</h1>} />
       <Route path="/contact" element={<h1>Contact</h1>} />
