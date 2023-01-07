@@ -18,10 +18,27 @@ const App:FC = () => {
 
   const [product, setProduct] = useState([])
   const [productList, setProductList] = useState({
-    "ice-cream": {
-      quantity: 1,
-      price: 0.79,
+    "grey-pen":{
+      quantity:1, 
+      price:0.3
     },
+    "pencil-yellow":{
+      quantity:1, 
+      price:0.55
+    },
+    "glue":{
+      quantity:1, 
+      price:0.8
+    },
+    "eraser":{
+      quantity: 1,
+      price: 0.3
+    },
+    "pencil":{
+      quantity: 1, 
+      price: 0.2
+    },
+  
     "pen": {
       quantity: 1,
       price: 0.89,

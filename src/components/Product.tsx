@@ -76,8 +76,8 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
         title={productName in shoppingCartItems ? `£${shoppingCartItems[productName].price} ${productName}`: `£${price} ${productName}`}
       />
       <CardMedia
+        sx={{background:"red",height:350, width:"100%"}}
         component="img"
-        height="250"
         image={`../images/${productName}.png`}
         alt={`an image of ${productName}`}
       />
