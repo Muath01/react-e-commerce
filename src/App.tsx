@@ -11,7 +11,7 @@ import Product from './components/Product';
 import { ListContext, ProductContext } from './context/productContext';
 import items from "./utilities/products.json"
 import About from './pages/About';
-
+import Contact from "./pages/Contact"
 
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
       <Route path="/react-ecommerce" element={<Home/>}/>
       <Route path="/home" element={<Home/>} />
       <Route path="/about" element={<About/>} />
-      <Route path="/contact" element={<h1>Contact</h1>} />
+      <Route path="/contact" element={<Contact/>} />
     </Routes>    
     </ProductContext.Provider>
     </ListContext.Provider>
