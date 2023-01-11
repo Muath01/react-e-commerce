@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import {Button} from '@mui/material';
-import React, { ReactElement, ReactNode, useCallback, useState, FC, useMemo } from 'react';
+import React, { ReactElement, ReactNode, useCallback, useState, FC, useMemo, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar';
@@ -9,45 +9,18 @@ import ShoppingCart from './components/ShoppingCart';
 import { useSelector } from 'react-redux';
 import Product from './components/Product';
 import { ListContext, ProductContext } from './context/productContext';
+import items from "./utilities/products.json"
+import About from './pages/About';
 
 
 
+function App() {
 
 
-const App:FC = () => {
+
 
   const [product, setProduct] = useState([])
-  const [productList, setProductList] = useState({
-    "grey-pen":{
-      quantity:1, 
-      price:0.3
-    },
-    "pencil-yellow":{
-      quantity:1, 
-      price:0.55
-    },
-    "glue":{
-      quantity:1, 
-      price:0.8
-    },
-    "eraser":{
-      quantity: 1,
-      price: 0.3
-    },
-    "pencil":{
-      quantity: 1, 
-      price: 0.2
-    },
-  
-    "pen": {
-      quantity: 1,
-      price: 0.89,
-    },
-    "ruler": {
-      quantity: 1,
-      price: 0.5,
-    },
-  })
+  const [productList, setProductList] = useState(items)
 
   const provideValue = useMemo(() => ({product, setProduct}), [product, setProduct])
   const productListValue = useMemo(() => ({productList, setProductList}), [productList, setProductList])
@@ -66,7 +39,7 @@ const App:FC = () => {
       <Route path="/" element={<Home/>}/>
       <Route path="/react-ecommerce" element={<Home/>}/>
       <Route path="/home" element={<Home/>} />
-      <Route path="/about" element={<h1>Hello</h1>} />
+      <Route path="/about" element={<About/>} />
       <Route path="/contact" element={<h1>Contact</h1>} />
     </Routes>    
     </ProductContext.Provider>

@@ -14,8 +14,8 @@ const IncreaseAndReduceWrapper = styled(CardContent)(({ theme }) => ({
 
 
 const closeButton = {
-    width:"2%", 
-    height:"5%", 
+    width:"10%", 
+    height:"100%", 
     borderRadius:0,
     padding:0, 
     position:"absolute", 
@@ -29,40 +29,41 @@ const closeButton = {
     }
 }
 
-const ShoppingCart = () => {
+function ShoppingCart(): React.ReactElement{
 
-    
-
-    
-    const {isOpen} = useSelector((state:any) => state.drawer)
-    const [productName, setProductName] = useState("");
-    const {shoppingCartItems} = useSelector((state:any) => state.drawer);
+    //States
     const [productCount, setProductCount] = useState(1);
+    const [productName, setProductName] = useState("");
+    
 
+    //Selectors
+    const {isOpen} = useSelector((state:any) => state.drawer)
+    const {shoppingCartItems} = useSelector((state:any) => state.drawer);
+
+    // variables
+    const [isDrawOpen] = useState<boolean>(isOpen);
+
+    //dispatch function
+    const dispatch = useDispatch()
+
+
+    //Functions
 
     // Calculate the total of the shopping cart and display it
-
-    let total = 0;
-    function calculateCartTotal(){
+    let total: number = 0;
+    function calculateCartTotal(): number{
 
         Object.keys(shoppingCartItems).map(item => {
     
         console.log(item)
         total += Math.round(shoppingCartItems[item]["price"] * 100) / 100
+
+        total = parseFloat(total.toFixed(2));
         }) 
         return total
     }
 
 
-
-
-    
-
-
-    const [isDrawOpen] = useState(isOpen);
-    const dispatch = useDispatch()
-    
-    
     function adjustCount(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, productName: string) {
         let value = e.currentTarget.innerText;
         let quantity = shoppingCartItems[productName].quantity
@@ -86,16 +87,20 @@ const ShoppingCart = () => {
     <>
     <Drawer anchor='right' open={isOpen} onClose={() => dispatch(setDrawer(false))}>
         <Box p={2} width="350px" textAlign="center" role="presentation">
+
+            <Card sx={{ backgroundColor:"white", position:"sticky", top:0, zIndex:1,  width:"100%"}}>
+
             <Typography variant='h6' component='div'>
                 Shopping Cart
             </Typography>
-            <Typography variant='h6' component='div'>
+            <Typography variant='h6' component='div' >
                 Total: {calculateCartTotal()}
             </Typography>
 
             <Button variant='contained' sx={closeButton} onClick={() => dispatch(setDrawer(false))}>
                 X
             </Button>
+            </Card>
 
 
             {Object.keys(shoppingCartItems).map((item:string) => (
@@ -106,10 +111,12 @@ const ShoppingCart = () => {
                         title={Object.keys(shoppingCartItems).length != 0 ? `£${shoppingCartItems[item].price} ${item}`: `£${item} ${item}`}
 
                         />
+
+
                     <CardMedia
                         component="img"
-                        height="250"
-                        image={`../images/${item}.png`}
+                        height="300"
+                        image={require(`../images/${item}.png`)}
                         alt={`an image of ${item}`}
                         />    
                     </div>

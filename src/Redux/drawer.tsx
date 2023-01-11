@@ -67,13 +67,10 @@ export const drawer = createSlice({
             
             let item = action.payload;
             let price = item["price"]
-            // console.log("inside", price)
 
-            
-            if(item["quantity"] >= 0){
+            if(state.shoppingCartItems[item["productName"]]){
 
                 const newUser = {...state.shoppingCartItems}
-                // console.log(newUser[item["productName"]].quantity)
                 let quantity = newUser[item["productName"]].quantity;
     
                 let newPrice = parseFloat((price * quantity).toFixed(2).padEnd(3, "0"))

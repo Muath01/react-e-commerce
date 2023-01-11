@@ -9,7 +9,7 @@ import { render } from '@testing-library/react'
 
 // }
 
-function Home() {
+function Home(): React.ReactElement {
 
   const {product, setProduct} = useContext(ProductContext)
   const {productList, setProductList} = useContext(ListContext);

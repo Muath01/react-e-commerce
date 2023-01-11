@@ -25,30 +25,28 @@ const IncreaseAndReduceWrapper = styled(CardContent)(({ theme }) => ({
 }))
 
 
-const  Product = ({productName, quantity, price} : ProductProp) => {
+const  Product = ({productName, quantity, price} : ProductProp): React.ReactElement => {
 
 
     // states
     const [isAdded, setIsAdded] = useState(false)
     const [productCount, setProductCount] = useState(1);
 
+
+    //selectors
     const {shoppingCartItems} = useSelector((state:any) => state.drawer)
     const {isOpen} = useSelector((state:any) => state.drawer)
 
 
-    // console.log("che", shoppingCartItems[productName].price)
-
-    // console.log(shoppingCartItems)
-
-    
-    
-
-
+    //dispatch funciton
     const dispatch = useDispatch();
 
 
-    function adjustCount(e: any){
-      let value = e.target.innerText;
+    function adjustCount(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+      
+      let target = e.target as HTMLButtonElement
+
+      let value = target.innerText;
 
       if(value == "+"){
         dispatch(incrementItem(productName))
@@ -58,14 +56,14 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
         dispatch(removeFromCart(productName))
         setIsAdded(false)
       }
+
       
-      if(shoppingCartItems[productName].quantity > 1) dispatch(changePrice({productName, quantity, price}))
+      if(shoppingCartItems[productName].quantity) {
+        dispatch(changePrice({productName, quantity, price}))
+      }else{
+      }
 
     }
-
-
-
-
 
   return (
     
@@ -75,10 +73,14 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
         sx={{textAlign:"center"}}
         title={productName in shoppingCartItems ? `£${shoppingCartItems[productName].price} ${productName}`: `£${price} ${productName}`}
       />
-      <CardMedia
-        sx={{height:350, width:"100%"}}
+
+      
+         <CardMedia
+         sx={{width:"100%"}}
         component="img"
-        image={`../images/${productName}.png`}
+        height="350"
+        image={require(`../images/${productName}.png`)}
+        // image={`test.png`}
         alt={`an image of ${productName}`}
       />
 
@@ -86,10 +88,10 @@ const  Product = ({productName, quantity, price} : ProductProp) => {
       {
         (productName in shoppingCartItems) && !isOpen?
         <IncreaseAndReduceWrapper>
-        <Button onClick={e => adjustCount(e)} variant='contained'>+</Button>
+        <Button onClick={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => adjustCount(e)} variant='contained'>+</Button>
         
         <Typography sx={{marginTop:"5px"}}>{shoppingCartItems[productName].quantity}</Typography>
-        <Button onClick={e => adjustCount(e)} variant='contained'>-</Button>
+        <Button onClick={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => adjustCount(e)} variant='contained'>-</Button>
         </IncreaseAndReduceWrapper>
         
         :

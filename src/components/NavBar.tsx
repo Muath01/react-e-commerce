@@ -1,4 +1,4 @@
-import React, {useContext, ChangeEvent, useMemo} from 'react';
+import React, {useContext, ChangeEvent, useMemo,useState} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -24,9 +24,10 @@ import { ListContext, ProductContext } from '../context/productContext';
 
 
 const backStyle = {
-    backgroundColor: "#212121",
+    backgroundColor: "primary",
     padding:2,
 }
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -37,6 +38,8 @@ const Search = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
+  height:"3.5rem",
+
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
     width: 'auto',
@@ -86,59 +89,57 @@ const LinkWrapper = styled(Box)(({theme}) => ({
 }))
 
 
-export default function NavBar() {
+export default function NavBar(): React.ReactElement {
 
+
+  //states
+  const [open, setOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [anchorEl, setAnchorEl] = useState<null>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null>(null);
 
 
   // selector 
   const {shoppingCartItems} = useSelector((state:any) => state.drawer)
-  let arr = Object.keys(shoppingCartItems)
-
-
+  const {isOpen} = useSelector((state:any) => state.drawer)
+  
+  // dispatch 
+  const dispatch = useDispatch();
+  
   //Context
-
   const {product} = useContext(ProductContext);
   const {productList, setProductList} = useContext(ListContext)
-
-  // console.log("pls", productList)
-
-  // let originalList = {...productList}
-
-
+  
+  
+  //variables
   const originalList = useMemo(() => ({...productList}), []);
-
-
-
-
-
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const {isOpen} = useSelector((state:any) => state.drawer)
-
-  const dispatch = useDispatch();
-
-
-
+  let arr = Object.keys(shoppingCartItems)
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  
+
+
+ 
+
+
+
 
   const handleProfileMenuOpen = (event: any) => {
     console.log("eventType: ", event.type);
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
+  const handleMobileMenuClose = ():void => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = ():void => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event: any) => {
+  const handleMobileMenuOpen = (event) => {
+    // let event = event as HTMLButtonElement
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -204,8 +205,19 @@ export default function NavBar() {
   
   ];
 
-  function change(e: any){
-    let value = e.target.innerText;
+  function change(e: React.KeyboardEvent<HTMLDivElement> | React.SyntheticEvent<Element, Event>){
+    console.log("nig")
+
+    let value;
+    let target = e.target as HTMLInputElement
+
+    
+    {target.innerText === "" ? value = target.value : value = target.innerText}
+    
+    console.log(target.innerText)
+    console.log(target.value)
+
+    setInputValue(value);
 
     
     let newObj = { 
@@ -217,7 +229,7 @@ export default function NavBar() {
     
     if(value in originalList){
       setProductList(newObj);
-    }else if(value == undefined){
+    }else if(value == ""){
       setProductList(originalList)
     }else{
     }
@@ -250,10 +262,27 @@ export default function NavBar() {
             </SearchIconWrapper>
             <Autocomplete
               freeSolo
+              open={open}
+              onOpen= {()=> {if(inputValue){setOpen(true)}}}
+
+              onClose={() => setOpen(false)}
+              inputValue={inputValue}
+
+              // multiple
+              filterSelectedOptions
               options={product}
-              sx={{ width: 400, height:50 }}
+              sx={{ width: 400, height:50}}
               placeholder="search..."
-              onChange={(e) => change(e)}
+              onInputChange={(e, v) => {
+                setInputValue(v);
+
+                if(!v){
+                  setOpen(false)
+                }
+              }}
+
+              onKeyUp={(e: React.KeyboardEvent<HTMLDivElement>) => change(e)}
+              onChange={(e: React.SyntheticEvent<Element, Event>) => change(e)}
               renderInput={(params) => <TextField {...params}/>}
             />
             {/* <StyledInputBase
@@ -288,7 +317,7 @@ export default function NavBar() {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleMobileMenuOpen(e)}
               color="inherit"
             >
               <MoreIcon />
