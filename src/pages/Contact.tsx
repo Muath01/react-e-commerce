@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { Grid, TextField } from '@mui/material'
 import { Box, height } from '@mui/system'
 import React from 'react'
+import CountrySelect from '../utilities/CountrySelect'
 
 const sx = {
   border: "2px solid black",
@@ -51,7 +52,8 @@ function Contact() {
         <FormField label="Occupation" variant='filled'/>
         </Grid>
         <Grid item xs={12}>
-        <FormField style={{width:"50rem"}} label="Country" variant='filled'/>
+          <CountrySelect/>
+        {/* <FormField style={{width:"50rem"}} label="Country" variant='filled'/> */}
         </Grid>
       </Grid>
     </Box>
