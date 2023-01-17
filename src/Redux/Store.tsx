@@ -1,8 +1,8 @@
-import {configureStore} from "@reduxjs/toolkit"
-import {drawer} from "./drawer"
+import { configureStore } from "@reduxjs/toolkit";
+import { drawer } from "./drawer";
 
 export const store = configureStore({
-    reducer: {
-        drawer: drawer.reducer, 
-    }
-})
+  reducer: {
+    drawer: drawer.reducer,
+  },
+});

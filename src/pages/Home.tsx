@@ -17,10 +17,6 @@ function Home(): React.ReactElement {
 
   const products: Object = productList;
 
-
-
-    
-
    useEffect(() => {
 
     // creates an array with products keys
