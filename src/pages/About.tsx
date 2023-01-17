@@ -5,7 +5,7 @@ interface AboutProp {
 }
 
 function About(): React.ReactElement {
-  return <div>About</div>;
+  return <div>ADD</div>;
 }
 
 export default About;
